@@ -1,31 +1,31 @@
-SET SERVEROUTPUT ON; 
- 
- 
-   CREATE TABLE CUSTOMER ( 
-    ID INT PRIMARY KEY, 
-    NAME VARCHAR(10), 
-    AGE INT, 
-    ADDRESS VARCHAR(10), 
-    SALARY number(10, 2) 
-); 
- 
-INSERT INTO CUSTOMER values(1,’Ramesh’,25,’Mysore’,200000); 
-INSERT INTO CUSTOMER values(2,’Komal’,35,’Bangalore’,800000); 
-INSERT INTO CUSTOMER values(3,’Mala’,45,’Mangalore’,56000); 
- 
-CREATE OR REPLACE TRIGGER sal_difference_trigger 
-BEFORE INSERT OR UPDATE OR DELETE ON CUSTOMER 
-FOR EACH ROW 
-DECLARE 
-old_salary NUMBER; 
-new_salary NUMBER; 
-BEGIN 
-    IF INSERTING OR UPDATING THEN 
-old_salary := NVL(:OLD.SALARY, 0); 
-new_salary := NVL(:NEW.SALARY, 0); 
-        DBMS_OUTPUT.PUT_LINE('Salary difference: ' || (new_salary - old_salary)); 
-    ELSIF DELETING THEN 
-old_salary := NVL(:OLD.SALARY, 0); 
-        DBMS_OUTPUT.PUT_LINE('Salary before deletion: ' || old_salary); 
-    END IF; 
-END; 
+SET SERVEROUTPUT ON;
+
+CREATE TABLE CUSTOMER (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR2(10),
+    AGE INT,
+    ADDRESS VARCHAR2(10),
+    SALARY NUMBER(10, 2)
+);
+
+INSERT INTO CUSTOMER values(1, 'Ramesh', 25, 'Mysore', 200000);
+INSERT INTO CUSTOMER values(2, 'Komal', 35, 'Bangalore', 800000);
+INSERT INTO CUSTOMER values(3, 'Mala', 45, 'Mangalore', 56000);
+
+CREATE OR REPLACE TRIGGER sal_difference_trigger
+BEFORE INSERT OR UPDATE OR DELETE ON CUSTOMER
+FOR EACH ROW
+DECLARE
+    old_salary NUMBER;
+    new_salary NUMBER;
+BEGIN
+    IF INSERTING OR UPDATING THEN
+        old_salary := NVL(:OLD.SALARY, 0);
+        new_salary := NVL(:NEW.SALARY, 0);
+        DBMS_OUTPUT.PUT_LINE('Salary difference: ' || (new_salary - old_salary));
+    ELSIF DELETING THEN
+        old_salary := NVL(:OLD.SALARY, 0);
+        DBMS_OUTPUT.PUT_LINE('Salary before deletion: ' || old_salary);
+    END IF;
+END;
+/
