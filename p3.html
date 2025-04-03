@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Student Object</title>
+    <script>
+      function createStudent() {
+        let student = {
+          name: prompt("Enter the student's name:"),
+          grade: parseInt(prompt("Enter the student's grade:")),
+          subjects: prompt("Enter the student's subjects separated by commas:")
+            .split(",")
+            .map((subject) => subject.trim()),
+
+          passed: function () {
+            return this.grade >= 40;
+          },
+        };
+        return student;
+      }
+
+      function displayInfo(student) {
+        console.log("Student Details:");
+
+        for (let key in student) {
+          if (typeof student[key] !== "function") {
+            console.log("${key}: ${student[key]}");
+          }
+        }
+
+        console.log("Passed:", student.passed() ? "Yes" : "No");
+      }
+
+      let student = createStudent();
+      displayInfo(student);
+    </script>
+  </head>
+  <body></body>
+</html>
